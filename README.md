@@ -1,16 +1,63 @@
-# React + Vite
+# Gaurav Sharma — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is my personal portfolio, built with React and Three.js.
 
-Currently, two official plugins are available:
+I wanted it to feel more like a small interactive experience than a normal portfolio page, so the site starts with a 3D laptop scene and then moves into the rest of the portfolio as you scroll.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What's inside
 
-## React Compiler
+- **3D intro scene** — a laptop, desk, room, lighting, and small desk details built with React Three Fiber and Three.js.
+- **Interactive laptop screen** — the laptop can show the intro logo and then play a video directly on the screen.
+- **About section** — a short introduction, education details, and a profile section.
+- **Projects** — project cards with a detail panel for the description, tech stack, and links.
+- **Coding profiles** — links to LeetCode, CodeChef, GitHub, and LinkedIn.
+- **Beyond Creation** — achievements, photography, football, and other things I enjoy outside coding.
+- **Scroll and hover interactions** — section reveal animations, card movement, image effects, and small UI interactions.
+- **Responsive design** — the layout adapts for smaller screens as well.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React
+- Vite
+- Three.js
+- React Three Fiber
+- React Three Drei
+- JavaScript
+- CSS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Running locally
+
+Clone the repository and install the dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+## Project assets
+
+The portfolio uses files from the `public` folder for the 3D model, images, and intro video.
+
+```
+public/
+├── images/
+├── models/
+│   └── laptop.glb
+└── videos/
+    └── video.mp4
+```
+
+## About the project
+
+This portfolio is a work in progress and will continue to get small improvements as I build more projects and add new experiences.
