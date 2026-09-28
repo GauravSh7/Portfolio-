@@ -998,7 +998,6 @@ canvas {
 .beyond-post-dot:hover {
   background: #777;
 }
-
 /* =========================
    RIGHT SIDE
 ========================= */
@@ -1802,4 +1801,333 @@ canvas {
 
 .beyond-image-dot:hover {
   transform: scale(1.35);
+}
+
+/* =========================================================
+   ===== NEW: DEVICE RESPONSIVENESS PASS =====
+   Desktop rules above stay unchanged.
+========================================================= */
+
+/* Prevent horizontal gesture/overflow problems on touch devices. */
+.beyond-image-card {
+  overscroll-behavior-x: contain;
+}
+
+/* -------------------------
+   TABLET / SMALL LAPTOP
+------------------------- */
+
+@media (max-width: 900px) {
+
+  .intro-section {
+    min-height: 100svh;
+  }
+
+  .intro-section canvas {
+    min-height: 100%;
+    touch-action: pan-y;
+  }
+
+  .hero-section {
+    min-height: 100svh;
+  }
+
+  .projects-section {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+  }
+
+  .projects-section:has(.project-detail-panel)
+    .projects-grid {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .project-detail-panel {
+    left: 20px;
+    right: 20px;
+    width: auto;
+    max-width: none;
+  }
+
+  .coding-profiles-section {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+
+  .typing-text {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .achievement-panel {
+    max-width: calc(100vw - 40px);
+  }
+}
+
+
+/* -------------------------
+   PHONE
+------------------------- */
+
+@media (max-width: 700px) {
+
+  body,
+  #root,
+  .portfolio-page {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .intro-section {
+    width: 100%;
+    height: 100svh;
+    min-height: 100svh;
+  }
+
+  .intro-section canvas {
+    width: 100% !important;
+    height: 100% !important;
+    touch-action: pan-y;
+  }
+
+  .hero-section {
+    min-height: 100svh;
+    padding: 70px 16px;
+  }
+
+  .achievement-panel {
+    left: 50%;
+    width: calc(100% - 32px);
+    max-width: 340px;
+    transform: translate(-50%, -50%);
+  }
+
+  .panel-open {
+    left: 12px;
+  }
+
+  .projects-section {
+    height: auto;
+    min-height: 100svh;
+    padding: 60px 16px;
+    overflow: visible;
+    justify-content: center;
+  }
+
+  .projects-heading {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .projects-grid {
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .project-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .projects-section:has(.project-detail-panel)
+    .projects-grid {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .project-detail-panel {
+    position: fixed;
+    top: 50%;
+    left: 16px;
+    right: 16px;
+    bottom: auto;
+    width: auto;
+    max-width: none;
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 30px 24px;
+    transform: translateY(-50%);
+    animation: projectPanelInMobile 0.4s ease;
+  }
+
+  .project-detail-links {
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  .coding-profiles-section {
+    height: auto;
+    min-height: 100svh;
+    padding: 60px 16px;
+    overflow: visible;
+  }
+
+  .coding-profiles-grid {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .coding-profile-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .typing-text {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+
+  .beyond-creation-section {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .beyond-left,
+  .beyond-right {
+    min-width: 0;  }
+
+  .beyond-image-card {
+    width: 100%;
+    max-width: 100%;
+    touch-action: pan-y;
+    overscroll-behavior-x: contain;
+  }
+
+  .beyond-image-card img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .footer-links {
+    width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 0 20px;
+  }
+}
+
+
+/* -------------------------
+   VERY SMALL PHONES
+------------------------- */
+
+@media (max-width: 380px) {
+
+  .hero-section {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .achievement-panel {
+    width: calc(100% - 24px);
+  }
+
+  .projects-section {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .project-detail-panel {
+    left: 12px;
+    right: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .beyond-creation-section {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .footer-links {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+
+/* =========================================================
+   ===== NEW: MOBILE PROJECT PANEL ANIMATION =====
+========================================================= */
+
+@keyframes projectPanelInMobile {
+  from {
+    opacity: 0;
+    transform: translateY(-46%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+
+/* =========================================================
+   ===== NEW: REDUCE HOVER TRANSFORMS ON TOUCH DEVICES =====
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+
+  .project-card:hover {
+    transform: none;
+  }
+
+  .coding-profile-card:hover {
+    transform: none;
+  }
+
+  .beyond-image-card:hover {
+    transform: none;
+  }
+
+  .beyond-image-card:hover img {
+    transform: none;
+  }
+
+  .profile-photo:hover {
+    transform: none;
+  }
+
+  .beyond-image-arrow:hover {
+    transform: translateY(-50%);
+  }
+
+  .beyond-arrow:hover {
+    transform: none;
+  }
+}
+
+
+/* =========================================================
+   ===== NEW: RESPECT REDUCED MOTION =====
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
