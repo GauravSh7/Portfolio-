@@ -79,7 +79,7 @@ function Laptop() {
       video.loop = false;
       video.muted = false;
       video.playsInline = true;
-      video.preload = "auto";
+      video.preload = "metadata";
 
       videoRef.current = video;
 
@@ -160,6 +160,12 @@ function Laptop() {
         }
 
         // TURN LAPTOP OFF AFTER VIDEO
+        if (videoRef.current) {
+          videoRef.current.pause();
+          videoRef.current.muted = true;
+          videoRef.current.currentTime = 0;
+        }
+
         setStage("off");
       });
 
@@ -183,52 +189,75 @@ function Laptop() {
     }
   }, [stage, scene]);
 
-  // Timer to transition from logo to static screen
+  // Timer to transition from logo to video
   useEffect(() => {
     if (stage !== "logo") return;
 
     const timer = setTimeout(() => {
-      setStage("static");
+      const video = videoRef.current;
 
-      if (videoRef.current) {
-        videoRef.current.currentTime = 0;
+      if (video) {
+        video.currentTime = 0;
+        video.muted = false;
 
-        videoRef.current.play();
+        const playPromise = video.play();
+
+        if (playPromise) {
+          playPromise.catch(() => {
+            // The video was already started by a user gesture.
+            // Keep the screen visible even if a browser delays audio.
+          });
+        }
       }
+
+      setStage("static");
     }, 7200);
 
     return () =>
       clearTimeout(timer);
   }, [stage]);
 
-  const handleClick = (e) => {
+  // Start only from a real click/touch on the laptop.
+  // There is no global keyboard listener, so typing/scrolling elsewhere
+  // on the page can never start the video by accident.
+  const handleStart = (e) => {
     e.stopPropagation();
 
-    if (stage === "off") {
-      setStage("logo");
+    if (stage !== "off") return;
+
+    const video = videoRef.current;
+
+    if (video) {
+      video.load();
+      video.currentTime = 0;
+      video.muted = true;
+
+      const playPromise = video.play();
+
+      if (playPromise) {
+        playPromise.catch(() => {
+          // The timer below will try playback again after the logo.
+        });
+      }
     }
+
+    setStage("logo");
   };
 
-  useEffect(() => {
-    const handleKeyDown = () => {
-      if (stage === "off") {
-        setStage("logo");
-      }
-    };
+  const handlePointerDown = (e) => {
+    if (e.pointerType === "mouse") return;
 
-    window.addEventListener("keydown", handleKeyDown);
+    handleStart(e);
+  };
 
-    return () => {
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
-    };
-  }, [stage]);
+  const handleClick = (e) => {
+    handleStart(e);
+  };
 
   return (
     <group
       position={[0.38, 1.16, 0]}
+      onPointerDown={handlePointerDown}
       onClick={handleClick}
     >
       <Center>
@@ -774,6 +803,44 @@ function BeyondCreation() {
   const touchStartX = useRef(null);
   const isDragging = useRef(false);
 
+  // Preload Beyond Creation images after the first paint so image switches
+  // are fast without making the initial page load heavier.
+  useEffect(() => {
+    const preloadImages = () => {
+      beyondPosts.forEach((item) => {
+        item.images.forEach((src) => {
+          const image = new Image();
+          image.src = src;
+        });
+      });
+    };
+
+    let idleId = null;
+    let timeoutId = null;
+
+    if ("requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(
+        preloadImages,
+        { timeout: 2000 }
+      );
+    } else {
+      timeoutId = window.setTimeout(
+        preloadImages,
+        600
+      );
+    }
+
+    return () => {
+      if (idleId !== null) {
+        window.cancelIdleCallback(idleId);
+      }
+
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, []);
+
   const handleMouseDown = (e) => {
     touchStartX.current = e.clientX;
     isDragging.current = true;
@@ -900,11 +967,19 @@ function BeyondCreation() {
           className="beyond-image-card"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={() => {
+            touchStartX.current = null;
+            isDragging.current = false;
+          }}
         >
 
           <img
             src={post.images[activeImage]}
             alt={post.title}
+            decoding="async"
+            draggable={false}
           />
 
           {post.images.length > 1 && (
@@ -922,7 +997,6 @@ function BeyondCreation() {
               >
                 →
               </button>
-
               <div className="beyond-image-indicators">
 
                 {post.images.map(
@@ -1233,9 +1307,35 @@ function App() {
 
         <Canvas
           camera={{
-            position: [0, 2.5, 10],
-            fov: 45,
+            position: [
+              0,
+              2.5,
+              typeof window !== "undefined" &&
+              window.innerWidth <= 600
+                ? 12
+                : 10,
+            ],
+            fov:
+              typeof window !== "undefined" &&
+              window.innerWidth <= 600
+                ? 50
+                : 45,
           }}
+          dpr={
+            typeof window !== "undefined" &&
+            window.innerWidth <= 700
+              ? [1, 1.25]
+              : [1, 2]
+          }
+          gl={
+            typeof window !== "undefined" &&
+            window.innerWidth <= 700
+              ? {
+                  antialias: false,
+                  powerPreference: "high-performance",
+                }
+              : undefined
+          }
         >
           <ambientLight intensity={2.08} />
 
@@ -1281,8 +1381,16 @@ function App() {
 
           <OrbitControls
             ref={controlsRef}
-            enableRotate={true}
-            enableZoom={true}
+            enableRotate={
+              typeof window !== "undefined"
+                ? window.innerWidth > 700
+                : true
+            }
+            enableZoom={
+              typeof window !== "undefined"
+                ? window.innerWidth > 700
+                : true
+            }
             enablePan={false}
             rotateSpeed={0.8}
             zoomSpeed={0.8}
