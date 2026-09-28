@@ -73,11 +73,15 @@ function Laptop() {
       // 2. FULL GRAY SCREEN 
       const video = document.createElement("video");
 
-      video.src = "/videos/meme2.mp4";
+      video.src = "/videos/video.mp4";
       video.crossOrigin = "anonymous";
       video.loop = false;
       video.muted = false;
       video.playsInline = true;
+      video.setAttribute("playsinline", "");
+video.setAttribute("webkit-playsinline", "");
+video.style.display = "none";
+document.body.appendChild(video);
       video.preload = "metadata";
 
       videoRef.current = video;
@@ -85,16 +89,20 @@ function Laptop() {
       const videoTexture = new THREE.VideoTexture(video);
       videoTexture.colorSpace = THREE.SRGBColorSpace;
 
-      const videoPlane = new THREE.Mesh(
-        new THREE.PlaneGeometry(
-          grayScreenWidth,
-          grayScreenHeight
-        ),
-        new THREE.MeshBasicMaterial({
-          map: videoTexture,
-          depthWrite: false,
-        })
-      );
+    const videoPlane = new THREE.Mesh(
+  new THREE.PlaneGeometry(grayScreenWidth, grayScreenHeight),
+  new THREE.MeshBasicMaterial({
+    map: videoTexture,
+    depthWrite: false,
+    toneMapped: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -4,
+    polygonOffsetUnits: -4,
+  })
+);
+
+videoPlane.renderOrder = 10;
+videoPlane.position.set(0, 0, logoZGap); // same gap the logo uses, which works
 
       videoPlane.position.set(
         0,
@@ -168,11 +176,11 @@ function Laptop() {
         const playPromise = video.play();
 
         if (playPromise) {
-          playPromise.catch(() => {
-            // The video was already started by a user gesture.
-            // Keep the screen visible even if a browser delays audio.
-          });
-        }
+  playPromise.catch(() => {
+    video.muted = true;
+    video.play().catch(() => {});
+  });
+}
       }
 
       setStage("static");
@@ -743,7 +751,7 @@ const beyondPosts = [
   },
 
   {
-    title: "FOOTBALL ENTHUSIAST",
+    title: "SPORTS",
     subtitle:
       "THE GAME I LOVE",
     text:
