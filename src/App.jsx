@@ -1,4 +1,3 @@
-
 import { Canvas } from "@react-three/fiber";
 
 import {
@@ -74,7 +73,7 @@ function Laptop() {
       // 2. FULL GRAY SCREEN 
       const video = document.createElement("video");
 
-      video.src = "/videos/video.mp4";
+      video.src = "/videos/meme2.mp4";
       video.crossOrigin = "anonymous";
       video.loop = false;
       video.muted = false;
@@ -116,47 +115,13 @@ function Laptop() {
 
       // VIDEO FINISHED → SCROLL TO SECOND SECTION
       video.addEventListener("ended", () => {
-
-        const introSection = document.querySelector(
-          ".profile-photo"
-        );
+        const introSection = document.querySelector(".profile-photo");
 
         if (introSection) {
-
-          const start = window.scrollY;
-
-          const target =
-            introSection.getBoundingClientRect().top +
-            window.scrollY;
-
-          const duration = 7000;
-
-          const startTime = performance.now();
-
-          const animateScroll = (currentTime) => {
-
-            const progress = Math.min(
-              (currentTime - startTime) / duration,
-              1
-            );
-
-            const ease =
-              progress < 0.5
-                ? 2 * progress * progress
-                : 1 -
-                  Math.pow(-2 * progress + 2, 2) / 2;
-
-            window.scrollTo(
-              0,
-              start + (target - start) * ease
-            );
-
-            if (progress < 1) {
-              requestAnimationFrame(animateScroll);
-            }
-          };
-
-          requestAnimationFrame(animateScroll);
+          introSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
         }
 
         // TURN LAPTOP OFF AFTER VIDEO
@@ -895,6 +860,20 @@ function BeyondCreation() {
     );
   };
 
+  const nextPost = () => {
+    setActivePost((current) =>
+      current === beyondPosts.length - 1 ? 0 : current + 1
+    );
+    setActiveImage(0);
+  };
+
+  const prevPost = () => {
+    setActivePost((current) =>
+      current === 0 ? beyondPosts.length - 1 : current - 1
+    );
+    setActiveImage(0);
+  };
+
   const handleTouchStart = (e) => {
     touchStartX.current =
       e.changedTouches[0].clientX;
@@ -940,6 +919,9 @@ function BeyondCreation() {
         </p>
 
         <div className="beyond-post-navigation">
+          <button className="beyond-post-arrow" onClick={prevPost}>
+            ←
+          </button>
 
           {beyondPosts.map((item, index) => (
             <button
@@ -957,6 +939,9 @@ function BeyondCreation() {
             />
           ))}
 
+          <button className="beyond-post-arrow" onClick={nextPost}>
+            →
+          </button>
         </div>
 
       </div>

@@ -1,4 +1,3 @@
-
 html {
   scroll-behavior: smooth;
 }
@@ -998,6 +997,7 @@ canvas {
 .beyond-post-dot:hover {
   background: #777;
 }
+
 /* =========================
    RIGHT SIDE
 ========================= */
@@ -1804,6 +1804,32 @@ canvas {
 }
 
 /* =========================================================
+   ===== NEW: BEYOND POST ARROWS =====
+========================================================= */
+.beyond-post-arrow {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px 10px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.beyond-post-arrow:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.beyond-post-arrow:active {
+  transform: scale(0.9);
+}
+
+/* =========================================================
    ===== NEW: DEVICE RESPONSIVENESS PASS =====
    Desktop rules above stay unchanged.
 ========================================================= */
@@ -1996,7 +2022,8 @@ canvas {
 
   .beyond-left,
   .beyond-right {
-    min-width: 0;  }
+    min-width: 0;
+  }
 
   .beyond-image-card {
     width: 100%;
