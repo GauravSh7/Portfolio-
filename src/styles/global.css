@@ -1,0 +1,1805 @@
+
+html {
+  scroll-behavior: smooth;
+}
+
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #050505;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+canvas {
+  display: block;
+}
+
+/* =========================
+   MAIN PAGE
+========================= */
+
+.portfolio-page {
+  width: 100%;
+  background: #050505;
+  color: white;
+}
+
+/* =========================
+   3D INTRO / LAPTOP
+========================= */
+
+.intro-section {
+  width: 100%;
+  height: 100vh;
+}
+
+.intro-section canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 100px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* =========================
+   CINEMATIC BACKGROUND
+========================= */
+
+.star-field {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+
+  width: 2px;
+  height: 2px;
+
+  background: white;
+  border-radius: 50%;
+
+  box-shadow: 0 0 6px 1px white;
+
+  animation: twinkle infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.7);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+/* =========================
+   METEORS
+========================= */
+
+.meteor {
+  position: absolute;
+
+  width: 3px;
+  height: 98px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.8),
+    white
+  );
+
+  border-radius: 9cap;
+
+  filter: drop-shadow(0 5px 9px white);
+
+  opacity: 0;
+
+  animation: meteorFall linear infinite;
+}
+
+@keyframes meteorFall {
+  0% {
+    transform: translateY(-200px);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(300px);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   HERO CONTENT
+========================= */
+
+.profile-photo,
+.hero-label,
+.hero-section h1,
+.hero-description {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================
+   PROFILE PHOTO
+========================= */
+
+.profile-photo {
+  width: 280px;
+  height: 280px;
+
+  margin: 0 auto 25px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  border: 3.5px solid #090909;
+}
+
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================
+   SOFTWARE DEVELOPER
+========================= */
+
+.hero-label {
+  margin: 0 0 65px;
+
+  font-size: 17px;
+  letter-spacing: 4.6px;
+
+  color: #ffffff;
+}
+
+/* =========================
+   NAME
+========================= */
+
+.hero-section h1 {
+  margin: 0;
+
+  font-family: Impact, Haettenschweiler,
+    "Arial Narrow Bold", sans-serif;
+
+  font-size: clamp(40px, 12vw, 140px);
+
+  line-height: 0.82;
+
+  letter-spacing: 6px;
+
+  font-weight: 900;
+
+  color: #ffffff;
+}
+
+.hero-section h1 span {
+  display: block;
+
+  margin-top: 18px;
+
+  font-size: clamp(40px, 12vw, 140px);
+
+  line-height: 0.82;
+
+  letter-spacing: 6px;
+
+  font-weight: 900;
+
+  color: #962525;
+}
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.hero-description {
+  max-width: 600px;
+
+  margin: 30px 0 0;
+
+  font-size: 20px;
+  line-height: 1.6;
+
+  color: #abaaaa;
+}
+
+/* =========================
+   ABOUT / ACHIEVEMENT PANEL
+========================= */
+
+.achievement-panel {
+  position: absolute;
+
+  left: 4%;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 340px;
+
+  padding: 28px 30px;
+
+  box-sizing: border-box;
+
+  z-index: 100;
+
+  border-left: 2px solid #8b47cf;
+
+  background: rgba(5, 5, 8, 0.8);
+
+  backdrop-filter: blur(8px);
+
+  color: white;
+
+  text-align: left;
+}
+
+.achievement-title {
+  font-size: 10px;
+
+  letter-spacing: 6px;
+
+  color: #f1efed;
+
+  margin-bottom: 22px;
+}
+
+.achievement-item {
+  margin-bottom: 22px;
+}
+
+.achievement-item:last-child {
+  margin-bottom: 0;
+}
+
+.achievement-item strong {
+  display: block;
+
+  font-family: Impact, Haettenschweiler,
+    "Arial Narrow Bold", sans-serif;
+
+  font-size: 32px;
+
+  letter-spacing: 1px;
+
+  color: #878fd2;
+}
+
+.achievement-item span {
+  display: block;
+
+  margin-top: 13px;
+
+  font-size: 13px;
+
+  letter-spacing: 2px;
+
+  color: #fffdfd;
+}
+
+/* =========================
+   PANEL BUTTONS
+========================= */
+
+.panel-close {
+  position: absolute;
+
+  top: 10px;
+  right: 14px;
+
+  background: none;
+  border: none;
+
+  color: #e2dddd;
+
+  font-size: 24px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  z-index: 101;
+}
+
+.panel-close:hover {
+  color: white;
+}
+
+.panel-open {
+  position: absolute;
+
+  left: 20px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  background: none;
+  border: none;
+
+  color: #888;
+
+  font-size: 24px;
+
+  cursor: pointer;
+
+  z-index: 100;
+}
+
+.panel-open:hover {
+  color: white;
+}
+
+/* =========================
+   PROJECTS
+========================= */
+
+.projects-section {
+  position: relative;
+
+  width: 100%;
+
+  height: 100vh;
+  min-height: 100vh;
+
+  padding: 70px 5%;
+
+  box-sizing: border-box;
+
+  background: #050505;
+  color: white;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+/* =========================
+   HEADING
+========================= */
+
+.projects-heading {
+  margin-bottom: 70px;
+
+  transition: width 0.4s ease;
+}
+
+.projects-heading p {
+  margin: 0 0 28px;
+
+  font-size: 11px;
+
+  letter-spacing: 5px;
+
+  color: #eae6e6;
+}
+
+.projects-heading h2 {
+  margin: 0;
+
+  font-family: Impact, Haettenschweiler,
+    "Arial Narrow Bold", sans-serif;
+
+  font-size: clamp(60px, 8vw, 110px);
+
+  line-height: 0.8;
+
+  letter-spacing: 3px;
+}
+
+/* =========================
+   PROJECT LAYOUT
+========================= */
+
+.projects-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 18px;
+
+  width: 100%;
+
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  transition:
+    width 0.4s ease,
+    margin 0.4s ease;
+}
+
+.projects-section:has(.project-detail-panel)
+  .projects-grid {
+  width: 52%;
+
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* =========================
+   PROJECT CARD
+========================= */
+
+.project-card {
+  position: relative;
+
+  height: 220px;
+
+  border: 1px solid #222;
+
+  background: #0b0b0d;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+
+  border-color: #b980f3;
+}
+
+/* =========================
+   PROJECT IMAGE
+========================= */
+
+.projects-section .project-card > img {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  opacity: 0.55;
+
+  z-index: 0;
+
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
+}
+
+.project-card:hover > img {
+  transform: scale(1.06);
+
+  opacity: 0.7;
+}
+
+/* =========================
+   DARK OVERLAY
+========================= */
+
+.project-card::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.15)
+  );
+
+  z-index: 1;
+
+  pointer-events: none;
+}
+
+/* =========================
+   PROJECT CONTENT
+========================= */
+
+.project-content {
+  position: absolute;
+
+  left: 25px;
+  bottom: 25px;
+
+  z-index: 2;
+}
+
+.project-content h3 {
+  margin: 0;
+
+  font-family: Impact, Haettenschweiler,
+    "Arial Narrow Bold", sans-serif;
+
+  font-size: clamp(30px, 3vw, 50px);
+
+  letter-spacing: 2px;
+
+  line-height: 0.9;
+
+  color: rgb(74, 14, 14);
+}
+
+.project-content span {
+  display: block;
+
+  margin-top: 10px;
+
+  font-size: 10px;
+
+  letter-spacing: 3px;
+
+  color: #aaa;
+}
+
+/* =========================
+   DETAIL PANEL
+========================= */
+
+.project-detail-panel {
+  position: absolute;
+
+  top: 63%;
+  right: 2%;
+
+  transform: translateY(-50%);
+
+  width: 40%;
+  max-width: 550px;
+
+  padding: 35px;
+
+  box-sizing: border-box;
+
+  background: #111116;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 20px;
+
+  box-shadow:
+    12px 12px 30px rgba(0, 0, 0, 0.8),
+    -8px -8px 25px rgba(255, 255, 255, 0.025),
+    0 0 40px rgba(120, 40, 180, 0.08);
+
+  color: white;
+
+  z-index: 20;
+
+  animation: projectPanelIn 0.4s ease;
+
+  overflow: hidden;
+}
+
+.project-detail-panel::before {
+  content: "";
+
+  position: absolute;
+
+  top: -100px;
+  right: -100px;
+
+  width: 220px;
+  height: 220px;
+
+  background: rgba(150, 37, 37, 0.12);
+
+  border-radius: 50%;
+
+  filter: blur(70px);
+
+  pointer-events: none;
+}
+
+@keyframes projectPanelIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translate(40px, -50%);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translate(0, -50%);
+  }
+}
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+.project-detail-close {
+  position: absolute;
+
+  top: 15px;
+  right: 20px;
+
+  background: none;
+  border: none;
+
+  color: #888;
+
+  font-size: 28px;
+
+  cursor: pointer;
+}
+
+.project-detail-close:hover {
+  color: white;
+}
+
+/* =========================
+   PANEL TITLE
+========================= */
+
+.project-detail-panel h2 {
+  margin: 0 0 35px;
+
+  font-family: Impact, Haettenschweiler,
+    "Arial Narrow Bold", sans-serif;
+
+  font-size: clamp(40px, 5vw, 70px);
+
+  line-height: 0.9;
+
+  letter-spacing: 2px;
+}
+
+/* =========================
+   PANEL INFORMATION
+========================= */
+
+.project-detail-item {
+  margin-bottom: 25px;
+}
+
+.project-detail-item span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 10px;
+
+  letter-spacing: 4px;
+
+  color: #ad3030;
+}
+
+.project-detail-item p {
+  margin: 0;
+
+  font-size: 15px;
+
+  line-height: 1.5;
+
+  color: #d0d0d0;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+.project-detail-links {
+  display: flex;
+
+  gap: 25px;
+
+  margin-top: 30px;
+}
+
+.project-detail-links a {
+  color: rgb(113, 116, 249);
+
+  text-decoration: none;
+
+  font-size: 11px;
+
+  letter-spacing: 3px;
+
+  border-bottom: 1px solid #a21717;
+
+  padding-bottom: 6px;
+}
+
+.project-detail-links a:hover {
+  color: #b980f3;
+
+  border-color: #b980f3;
+}
+
+/* =========================================================
+   BEYOND CODE TYPING TRANSITION
+========================================================= */
+
+.beyond-transition-section {
+  position: relative;
+
+  width: 100%;
+
+  height: 100vh;
+  min-height: 100vh;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #050505;
+
+  color: rgba(199, 17, 17, 0.886);
+
+  text-align: center;
+
+  overflow: hidden;
+}
+
+.typing-text {
+  max-width: 1200px;
+
+  padding: 0 50px;
+
+  font-family: Impact, Haettenschweiler,
+    "Arial Narrow Bold", sans-serif;
+
+  font-size: clamp(28px, 4vw, 58px);
+
+  line-height: 1.2;
+
+  letter-spacing: 1px;
+}
+
+.typing-cursor {
+  margin-left: 3px;
+
+  animation:
+    typingCursorBlink 5s infinite;
+}
+
+@keyframes typingCursorBlink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.beyond-arrow {
+  margin-top: 55px;
+
+  background: none;
+
+  border: none;
+
+  color: rgb(248, 244, 244);
+
+  font-size: 42px;
+
+  cursor: pointer;
+
+  animation:
+    beyondArrowMove 1.5s infinite ease-in-out;
+}
+
+@keyframes beyondArrowMove {
+  0%,
+  100% {
+    transform: translateX(0);
+
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translateX(10px);
+
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   BEYOND CREATION
+========================================================= */
+
+.beyond-creation-section {
+  position: relative;
+
+  width: 100%;
+
+  height: 100vh;
+  min-height: 100vh;
+
+  box-sizing: border-box;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 60px;
+
+  align-items: center;
+
+  padding: 60px 7%;
+
+  background: #050505;
+
+  color: rgb(177, 100, 100);
+
+  overflow: hidden;
+}
+
+/* =========================
+   LEFT SIDE
+========================= */
+
+.beyond-left {
+  max-width: 600px;
+
+  padding-left: 20px;
+}
+
+.beyond-label {
+  margin: 0 0 25px;
+
+  font-size: 11px;
+
+  letter-spacing: 5px;
+
+  color: #f3efef;
+}
+
+.beyond-left h2 {
+  margin: 0;
+
+  font-family: Impact, Haettenschweiler,
+    "Arial Narrow Bold", sans-serif;
+
+  font-size: clamp(55px, 7vw, 105px);
+
+  line-height: 0.85;
+
+  letter-spacing: 2px;
+
+  color: rgb(233, 118, 118);
+}
+
+.beyond-subtitle {
+  margin: 28px 0 0;
+
+  font-size: 11px;
+
+  letter-spacing: 4px;
+
+  color: #e70d0d;
+}
+
+.beyond-description {
+  width: 100%;
+  max-width: 560px;
+
+  min-height: 150px;
+
+  margin: 28px 0 0;
+
+  font-size: 17px;
+  line-height: 1.75;
+
+  color: #a9a9a9;
+
+  text-align: left;
+
+  box-sizing: border-box;
+}
+
+/* =========================
+   POST NAVIGATION
+========================= */
+
+.beyond-post-navigation {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 42px;
+}
+
+.beyond-post-dot {
+  width: 28px;
+  height: 3px;
+
+  padding: 0;
+
+  border: none;
+
+  background: #333;
+
+  cursor: pointer;
+
+  transition:
+    width 0.3s ease,
+    background 0.3s ease;
+}
+
+.beyond-post-dot.active {
+  width: 55px;
+
+  background: #ffffff;
+}
+
+.beyond-post-dot:hover {
+  background: #777;
+}
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.beyond-right {
+  width: 100%;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+}
+
+.beyond-image-card {
+  position: relative;
+
+  width: min(100%, 620px);
+
+  height: 570px;
+
+  background: #0b0b0d;
+
+  border: 1px solid #222;
+
+  overflow: hidden;
+
+  user-select: none;
+
+  touch-action: pan-y;
+}
+
+.beyond-image-card img {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  z-index: 2;
+
+  transition: opacity 0.25s ease;
+}
+
+/* shown only when image doesn't exist */
+
+.beyond-image-fallback {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #333;
+
+  font-size: 14px;
+
+  letter-spacing: 5px;
+
+  z-index: 1;
+}
+
+/* =========================
+   IMAGE ARROWS
+========================= */
+
+.beyond-image-arrow {
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 45px;
+  height: 45px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  background: rgba(0, 0, 0, 0.45);
+
+  color: white;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  z-index: 5;
+
+  backdrop-filter: blur(5px);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.beyond-image-arrow:hover {
+  background: rgba(0, 0, 0, 0.8);
+
+  border-color: white;
+}
+
+.beyond-image-arrow.left {
+  left: 18px;
+}
+
+.beyond-image-arrow.right {
+  right: 18px;
+}
+
+/* =========================
+   IMAGE INDICATORS
+========================= */
+
+.beyond-image-indicators {
+  position: absolute;
+
+  left: 50%;
+  bottom: 20px;
+
+  transform: translateX(-50%);
+
+  display: flex;
+
+  gap: 7px;
+
+  z-index: 6;
+}
+
+.beyond-image-dot {
+  width: 7px;
+  height: 7px;
+
+  padding: 0;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.35);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.beyond-image-dot.active {
+  background: white;
+
+  transform: scale(1.25);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+  .beyond-creation-section {
+    grid-template-columns: 1fr;
+
+    gap: 35px;
+
+    padding: 50px 6%;
+
+    height: auto;
+
+    min-height: 100vh;
+
+    overflow: visible;
+  }
+
+  .beyond-left {
+    padding-left: 0;
+
+    max-width: none;
+  }
+
+  .beyond-left h2 {
+    font-size: clamp(50px, 12vw, 85px);
+  }
+
+  .beyond-description {
+    max-width: 650px;
+  }
+
+  .beyond-image-card {
+    height: 500px;
+  }
+}
+
+@media (max-width: 600px) {
+  .beyond-creation-section {
+    padding: 45px 5% 60px;
+
+    gap: 30px;
+  }
+
+  .beyond-left h2 {
+    font-size: clamp(45px, 15vw, 70px);
+  }
+
+  .beyond-description {
+    font-size: 15px;
+
+    line-height: 1.6;
+  }
+
+  .beyond-image-card {
+    height: 430px;
+  }
+
+  .beyond-image-arrow {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.coding-profiles-section {
+  position: relative;
+
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+
+  box-sizing: border-box;
+
+  padding: 80px 5%;
+
+  background: #050505;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+/* =========================
+   HEADING
+========================= */
+
+.coding-profiles-heading {
+  margin-bottom: 70px;
+  text-align: center;
+}
+
+.coding-profiles-heading p {
+  margin:  50px;
+
+  font-size: 11px;
+  letter-spacing: 5px;
+
+  color: #777;
+}
+
+.coding-profiles-heading h2 {
+  margin: 0;
+
+  font-family: Impact, Haettenschweiler,
+    "Arial Narrow Bold", sans-serif;
+
+  font-size: clamp(55px, 8vw, 105px);
+
+  line-height: 0.6;
+  letter-spacing: 3px;
+
+  color: rgb(11, 19, 135);
+}
+
+/* =========================
+   4 CARDS
+========================= */
+
+.coding-profiles-grid {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+/* =========================
+   PROFILE CARD
+========================= */
+
+.coding-profile-card {
+  position: relative;
+
+  height: 220px;
+
+  padding: 28px;
+
+  box-sizing: border-box;
+
+  background: #0b0b0d;
+
+  border: 1px solid #222;
+
+  color: white;
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    background 0.35s ease;
+}
+
+.coding-profile-card:hover {
+  transform: translateY(-6px);
+
+  border-color: #b980f3;
+
+  background: #101014;
+}
+
+/* =========================
+   TOP STAT
+========================= */
+
+.coding-profile-number {
+  position: absolute;
+
+  top: 24px;
+  right: 25px;
+
+  font-size: 10px;
+
+  letter-spacing: 2px;
+
+  color: #555;
+
+  transition: color 0.3s ease;
+}
+
+.coding-profile-card:hover
+.coding-profile-number {
+  color: #aaa;
+}
+
+/* =========================
+   NAME
+========================= */
+
+.coding-profile-content h3 {
+  margin: 0;
+
+  font-family: Impact, Haettenschweiler,
+    "Arial Narrow Bold", sans-serif;
+
+  font-size: clamp(38px, 4vw, 58px);
+
+  line-height: 0.9;
+
+  letter-spacing: 2px;
+
+  color: rgb(247, 245, 245);
+}
+
+/* GFG is longer */
+
+.coding-profile-card:last-child
+.coding-profile-content h3 {
+  font-size: clamp(30px, 3vw, 46px);
+}
+
+.coding-profile-content span {
+  display: block;
+
+  margin-top: 12px;
+
+  font-size: 10px;
+
+  letter-spacing: 3px;
+
+  color: #969595;
+}
+
+/* =========================
+   ARROW
+========================= */
+
+.coding-profile-arrow {
+  position: absolute;
+
+  right: 25px;
+  bottom: 24px;
+
+  font-size: 24px;
+
+  color: #fbf7f7;
+
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
+}
+
+.coding-profile-card:hover
+.coding-profile-arrow {
+  transform: translate(5px, -5px);
+
+  color: white;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+  .coding-profiles-section {
+    height: auto;
+    min-height: 100vh;
+
+    padding: 60px 6%;
+  }
+
+  .coding-profiles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .coding-profile-card {
+    height: 190px;
+  }
+
+  .coding-profile-content h3 {
+    font-size: 42px;
+  }
+
+  .coding-profile-card:last-child
+  .coding-profile-content h3 {
+    font-size: 36px;
+  }
+}
+
+.coding-profile-image {
+  position: absolute;
+
+  top: 25px;
+  left: 28px;
+
+  width: 65px;
+  height: 65px;
+
+  object-fit: contain;
+
+  opacity: 0.85;
+
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease;
+}
+
+.coding-profile-card:hover .coding-profile-image {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+.beyond-image-card img {
+  object-fit: cover;
+  object-position: center top;
+}
+
+.beyond-image-card:active {
+  cursor: grabbing;
+}
+
+/* =========================================================
+   MINIMAL FOOTER
+========================================================= */
+
+.portfolio-footer {
+  width: 100%;
+  padding: 35px 0 30px;
+
+  display: flex;
+  justify-content: center;
+
+  background: #050505;
+
+  border-top: 1px solid #151515;
+}
+
+/* =========================
+   FOOTER LINKS
+========================= */
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 85px;
+}
+
+.footer-links a {
+  position: relative;
+
+  color: #9abbe3;
+
+  text-decoration: none;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 11px;
+
+  letter-spacing: 1.5px;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* small underline */
+
+.footer-links a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -5px;
+
+  width: 100%;
+  height: 1px;
+
+  background: rgb(230, 225, 225);
+
+  transform: scaleX(0);
+
+  transform-origin: center;
+
+  transition: transform 0.3s ease;
+}
+
+/* hover */
+
+.footer-links a:hover {
+  color: rgb(245, 243, 243);
+
+  transform: translateY(-2px);
+}
+
+.footer-links a:hover::after {
+  transform: scaleX(1);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  .footer-links {
+    gap: 90px;
+  }
+
+  .footer-links a {
+    font-size: 30px;
+  }
+}
+
+
+/* =========================================================
+   ===== NEW: SCROLL REVEAL EFFECTS =====
+========================================================= */
+
+.scroll-reveal {
+  opacity: 0;
+
+  transform: translateY(35px);
+
+  transition:
+    opacity 0.85s ease,
+    transform 0.85s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   ===== NEW: PROJECT CARD STAGGER =====
+========================================================= */
+
+.projects-grid .project-card.scroll-reveal:nth-child(1) {
+  transition-delay: 0s;
+}
+
+.projects-grid .project-card.scroll-reveal:nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+.projects-grid .project-card.scroll-reveal:nth-child(3) {
+  transition-delay: 0.16s;
+}
+
+.projects-grid .project-card.scroll-reveal:nth-child(4) {
+  transition-delay: 0.24s;
+}
+
+
+/* =========================================================
+   ===== NEW: CODING CARD STAGGER =====
+========================================================= */
+
+.coding-profiles-grid .coding-profile-card.scroll-reveal:nth-child(1) {
+  transition-delay: 0s;
+}
+
+.coding-profiles-grid .coding-profile-card.scroll-reveal:nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+.coding-profiles-grid .coding-profile-card.scroll-reveal:nth-child(3) {
+  transition-delay: 0.16s;
+}
+
+.coding-profiles-grid .coding-profile-card.scroll-reveal:nth-child(4) {
+  transition-delay: 0.24s;
+}
+
+
+/* =========================================================
+   ===== NEW: PROJECT HOVER =====
+========================================================= */
+
+.project-card.scroll-reveal.is-visible:hover {
+  transform: translateY(-8px) scale(1.01);
+}
+
+
+/* =========================================================
+   ===== NEW: PROFILE PHOTO HOVER =====
+========================================================= */
+
+.profile-photo {
+  transition:
+    transform 0.5s ease;
+}
+
+.profile-photo:hover {
+  transform: scale(1.035);
+}
+
+
+/* =========================================================
+   ===== NEW: BEYOND IMAGE HOVER =====
+========================================================= */
+
+.beyond-image-card img {
+  transition:
+    opacity 0.25s ease,
+    transform 0.7s ease;
+}
+
+.beyond-image-card:hover img {
+  transform: scale(1.035);
+}
+
+
+/* =========================================================
+   ===== NEW: BEYOND IMAGE CARD =====
+========================================================= */
+
+.beyond-image-card {
+  transition:
+    transform 0.45s ease;
+}
+
+.beyond-image-card:hover {
+  transform: translateY(-4px);
+}
+
+
+/* =========================================================
+   ===== NEW: ARROW INTERACTION =====
+========================================================= */
+
+.beyond-image-arrow {
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.25s ease;
+}
+
+.beyond-image-arrow:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+
+.beyond-arrow {
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.beyond-arrow:hover {
+  transform: translateX(14px);
+}
+
+
+/* =========================================================
+   ===== NEW: PROJECT DETAIL CLOSE =====
+========================================================= */
+
+.project-detail-close {
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease;
+}
+
+.project-detail-close:hover {
+  transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   ===== NEW: PANEL BUTTON INTERACTION =====
+========================================================= */
+
+.panel-close,
+.panel-open {
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease;
+}
+
+.panel-close:hover {
+  transform: translateX(-3px);
+}
+
+.panel-open:hover {
+  transform: translateY(-50%) translateX(3px);
+}
+
+
+/* =========================================================
+   ===== NEW: PROJECT LINKS =====
+========================================================= */
+
+.project-detail-links a {
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.project-detail-links a:hover {
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   ===== NEW: POST DOT INTERACTION =====
+========================================================= */
+
+.beyond-post-dot {
+  transition:
+    width 0.3s ease,
+    background 0.3s ease,
+    transform 0.25s ease;
+}
+
+.beyond-post-dot:hover {
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   ===== NEW: IMAGE DOT INTERACTION =====
+========================================================= */
+
+.beyond-image-dot {
+  transition:
+    transform 0.25s ease,
+    background 0.2s ease;
+}
+
+.beyond-image-dot:hover {
+  transform: scale(1.35);
+}
