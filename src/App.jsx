@@ -12,6 +12,16 @@ import "./styles/global.css";
 import { useState, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 
+/* Cursor-follow spotlight used on project + coding-profile cards.
+   Cheap: just sets two CSS custom properties, no re-render. */
+const handleCardSpotlight = (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  e.currentTarget.style.setProperty("--mx", `${x}%`);
+  e.currentTarget.style.setProperty("--my", `${y}%`);
+};
+
 /* =========================
     LAPTOP
 ========================= */
@@ -73,7 +83,7 @@ function Laptop() {
       // 2. FULL GRAY SCREEN 
       const video = document.createElement("video");
 
-      video.src = "/videos/video.mp4";
+      video.src = "/videos/meme.mp4";
       video.crossOrigin = "anonymous";
       video.loop = false;
       video.muted = false;
@@ -83,6 +93,16 @@ video.setAttribute("webkit-playsinline", "");
 video.style.display = "none";
 document.body.appendChild(video);
       video.preload = "metadata";
+
+      // Surface a clear reason in the console if the file is missing
+      // or fails to decode (e.g. wrong filename/path under /public).
+      video.addEventListener("error", () => {
+        console.warn(
+          "Laptop video failed to load from",
+          video.currentSrc || video.src,
+          "-- check the file exists at that exact path under /public."
+        );
+      });
 
       videoRef.current = video;
 
@@ -169,6 +189,11 @@ videoPlane.position.set(0, 0, logoZGap); // same gap the logo uses, which works
     const timer = setTimeout(() => {
       const video = videoRef.current;
 
+      // Reveal the video plane first, then start playback -- starting
+      // playback while the plane was still hidden behind the logo is
+      // what caused the "video doesn't show" bug.
+      setStage("static");
+
       if (video) {
         video.currentTime = 0;
         video.muted = false;
@@ -176,14 +201,16 @@ videoPlane.position.set(0, 0, logoZGap); // same gap the logo uses, which works
         const playPromise = video.play();
 
         if (playPromise) {
-  playPromise.catch(() => {
-    video.muted = true;
-    video.play().catch(() => {});
-  });
-}
+          playPromise.catch(() => {
+            // Autoplay-with-sound blocked -- fall back to muted
+            // playback so the clip still shows on the laptop screen.
+            video.muted = true;
+            video.play().catch((err) => {
+              console.warn("Laptop video failed to play:", err);
+            });
+          });
+        }
       }
-
-      setStage("static");
     }, 7200);
 
     return () =>
@@ -201,17 +228,12 @@ videoPlane.position.set(0, 0, logoZGap); // same gap the logo uses, which works
     const video = videoRef.current;
 
     if (video) {
+      // Only prepare the video here — do NOT play it yet. Playing now
+      // would run the clip hidden behind the logo for 7.2s, and if the
+      // clip is shorter than that it fires "ended" before the video
+      // plane is ever shown, which looked like "nothing happens".
       video.load();
       video.currentTime = 0;
-      video.muted = true;
-
-      const playPromise = video.play();
-
-      if (playPromise) {
-        playPromise.catch(() => {
-          // The timer below will try playback again after the logo.
-        });
-      }
     }
 
     setStage("logo");
@@ -663,6 +685,7 @@ function CodingProfiles() {
             target="_blank"
             rel="noopener noreferrer"
             className="coding-profile-card"
+            onMouseMove={handleCardSpotlight}
           >
 
             <img
@@ -734,7 +757,7 @@ const beyondPosts = [
       "Not everything I create starts with code. Photography is one of the ways I slow down and pay attention to the world around me. These are a few moments I captured simply because something about them caught my eye.",
     images: [
       "/images/photo1.png",
-      "/images/photo4.png",
+      "/images/photo2.png",
       "/images/photo3.png",
     ],
   },
@@ -1291,8 +1314,44 @@ function App() {
     };
   }, []);
 
+  /* =========================================================
+     SCROLL PROGRESS + PARALLAX GLOW (CSS-var driven, cheap)
+  ========================================================= */
+
+  useEffect(() => {
+    let ticking = false;
+
+    const updateProgress = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const progress = max > 0 ? Math.min(1, Math.max(0, doc.scrollTop / max)) : 0;
+
+      doc.style.setProperty("--scroll-progress", progress.toFixed(4));
+      doc.style.setProperty("--grid-shift", `${(progress * 160).toFixed(1)}px`);
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateProgress);
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   return (
     <div className="portfolio-page">
+
+      <div className="scroll-progress" aria-hidden="true" />
+      <div className="scene-glow" aria-hidden="true" />
 
       {/* INTRO */}
 
@@ -1509,6 +1568,7 @@ function App() {
 
           <div
             className="project-card"
+            onMouseMove={handleCardSpotlight}
             onClick={() =>
               setSelectedProject(
                 projects.cine
@@ -1526,6 +1586,7 @@ function App() {
 
           <div
             className="project-card"
+            onMouseMove={handleCardSpotlight}
             onClick={() =>
               setSelectedProject(
                 projects.drone
@@ -1543,6 +1604,7 @@ function App() {
 
           <div
             className="project-card"
+            onMouseMove={handleCardSpotlight}
             onClick={() =>
               setSelectedProject(
                 projects.trace
@@ -1560,6 +1622,7 @@ function App() {
 
           <div
             className="project-card"
+            onMouseMove={handleCardSpotlight}
             onClick={() =>
               setSelectedProject(
                 projects.todo
